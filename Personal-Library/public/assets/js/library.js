@@ -1,9 +1,7 @@
 $(document).ready(function(){
 
-
-
-  $.get('/api/books').then(response => {
-
+$.get('/api/books').then(response => {
+    console.log(response)
     for (let i = 0; i < response.length; i++) {
       const { firstName, lastName, title, coverPhoto } = response[i];
       console.log(title)
@@ -20,6 +18,9 @@ $(document).ready(function(){
       cardBody.append(bookDetailLink, bookTitle)
       card.append(cardBody);
       $('#books').append(card)
-    } 
-  })
+    }
+  }
+  )
+  
+  
 })

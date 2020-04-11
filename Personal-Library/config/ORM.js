@@ -24,9 +24,30 @@ class ORM  {
     const queryString = `SELECT ${this.printQuestionMarks(colsToSelect.length, 'cols')} FROM ?? INNER JOIN ?? ON ??.?? = ??.??`;
     return this.connection.query(queryString, [...colsToSelect, tableOne, tableTwo, tableOne, tableOneCol, tableTwo, tableTwoCol])
   }
+
+  selectAll(table){
+    const queryString = 'SELECT * FROM ??';
+    return this.connection.query(queryString, [table])
+  }
+
+  create(table, columns, values) {
+    const queryString = `INSERT INTO ?? (${columns.join(', ')}) VALUES (${this.printQuestionMarks(values.length)})`;
+
+    return this.connection.query(queryString, [table, ...values])
+  }
+
+  update(table, objColVals, id){
+    var queryString = `UPDATE ?? SET ? WHERE ?`;
+    
+    return this.connection.query(queryString, [table, objColVals, id])
+  }
+
+
+
+
 };
 module.exports = new ORM(connection);
-const test = new ORM(connection);
-test.innerJoin(['firstName', 'lastName', 'title', 'coverPhoto'], 'authors', 'books', 'id', 'authorId')
-.then(results => console.log(results))
-.catch(err => console.log(err))
+// const test = new ORM(connection);
+// test.innerJoin(['firstName', 'lastName', 'title', 'coverPhoto'], 'authors', 'books', 'id', 'authorId')
+// .then(results => console.log(results))
+// .catch(err => console.log(err))

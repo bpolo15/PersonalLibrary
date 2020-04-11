@@ -9,7 +9,13 @@ const connection = mysql.createConnection({
     database: 'library_db'
   });
 
-connection.connect();
+connection.connect(function(err){
+  if (err){
+    console.error("Error connecting: " + err.stack);
+    return;
+  }
+  console.log("Connected as id " + connection.threadId);
+});
 
 // we give connection.query access to promises
 // i.e. .then() and .catch()
