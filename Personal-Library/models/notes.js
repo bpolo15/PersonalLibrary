@@ -14,6 +14,10 @@ class Notes {
     create(columns, values) {
         return ORM.create("books", columns, values)
     }
-}
+
+    remove(columns, condition){
+        return ORM.delete("notes", columns, condition)
+    }
+};
 
 module.exports = new Notes();

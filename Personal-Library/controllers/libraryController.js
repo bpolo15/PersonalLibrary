@@ -13,10 +13,18 @@ router.get("/api/books", (req, res) => {
     
 });
 
-
+router.delete('/api/note/:id', (req, res) => {
+    const {id} = req.params
+    Notes.remove('id', id)
+    .then(results => {
+        res.json(results)
+    .catch(err => res.json(err))
+    })
+})
 
 router.get("/api/book/:id", (req, res) => {
-    Book.selectAll()
+    const id = req.params.id
+    Book.selectAll('id', id)
     .then(result =>res.json(result))
     .catch(err => res.json(err))
 });

@@ -42,6 +42,12 @@ class ORM  {
     return this.connection.query(queryString, [table, objColVals, id])
   }
 
+  delete(table, cols, value){
+    var queryString = 'DELETE FROM ?? WHERE ?? = ?';
+    
+    return this.connection.query(queryString, [table, cols, value])
+  }
+
 
 
 
