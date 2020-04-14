@@ -2,16 +2,16 @@ const ORM = require("../config/ORM.js");
 
 class Book {
 
-    selectAll(){
-        return ORM.selectAll("books")
+    getAllBooks(){
+        return ORM.innerJoin(['books.id', 'firstName', 'lastName', 'title', 'coverPhoto'], 'authors', 'books', 'id', 'authorId')
 
     }
-    innerJoin(){
-        return ORM.innerJoin(['firstName', 'lastName', 'title', 'coverPhoto'], 'authors', 'books', 'id', 'authorId')   
+    getOneBook(bookId){
+        return ORM.innerJoinOne(['books.id', 'firstName', 'lastName', 'title', 'coverPhoto'], 'authors', 'books', 'id', 'authorId', bookId)   
     }
     
-    create(columns, values) {
-        return ORM.create("books", columns, values)
+    addBook(columns, values) {
+        return ORM.create("books", ['title', 'coverPhoto', 'authorId'], values)
     }
 }
 

@@ -2,21 +2,17 @@ const ORM = require("../config/ORM.js");
 
 class Notes {
 
-    selectAll(){
-        return ORM.selectAll("notes")
+    getBookNotes(bookId){
+        return ORM.innerJoinOne(['notes.id', 'title', 'note'], 'books', 'notes', 'id', 'bookId', bookId)
 
     }
-    update(){
-        return ORM.update("notes", objColVals, id)
+    addBookNote(values){
+        return ORM.create("notes", ['note', 'bookId'], values)
 
     }
-    
-    create(columns, values) {
-        return ORM.create("books", columns, values)
-    }
 
-    remove(columns, condition){
-        return ORM.delete("notes", columns, condition)
+    deleteBookNote(value){
+        return ORM.delete("notes", 'id', value)
     }
 };
 

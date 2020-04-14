@@ -25,22 +25,20 @@ class ORM  {
     return this.connection.query(queryString, [...colsToSelect, tableOne, tableTwo, tableOne, tableOneCol, tableTwo, tableTwoCol])
   }
 
-  selectAll(table){
-    const queryString = 'SELECT * FROM ??';
-    return this.connection.query(queryString, [table])
+  innerJoinOne(colsToSelect, tableOne, tableTwo, tableOneCol,tableTwoCol,bookId){
+    const queryString = `SELECT ${this.printQuestionMarks(colsToSelect.length, 'cols')} FROM ?? INNER JOIN ?? ON ??.?? = ??.?? WHERE books.id=?`;
+
+    return this.connection.query(queryString, [...colsToSelect, tableOne, tableTwo, tableOne, tableOneCol, tableTwo, tableTwoCol, bookId])
   }
 
+
   create(table, columns, values) {
-    const queryString = `INSERT INTO ?? (${columns.join(', ')}) VALUES (${this.printQuestionMarks(values.length)})`;
+    const queryString = `INSERT INTO ?? (${columns.join(', ')}) VALUES (${this.printQuestionMarks(values.length, 'vals')})`;
 
     return this.connection.query(queryString, [table, ...values])
   }
 
-  update(table, objColVals, id){
-    var queryString = `UPDATE ?? SET ? WHERE ?`;
-    
-    return this.connection.query(queryString, [table, objColVals, id])
-  }
+ 
 
   delete(table, cols, value){
     var queryString = 'DELETE FROM ?? WHERE ?? = ?';
